@@ -66,10 +66,10 @@ module Chronicle::Tags
   
   def children_find_options_with_draft_versioning(tag)
     options = children_find_options_without_draft_versioning(tag)
+    options.merge!(:current => true) if dev?(tag.globals.page.request)
     if(Object.const_defined?(:ReorderExtension))
       options[:order].sub!(/published_at/i, 'position') unless tag.attr['by']
     end
-    options.merge!(:current => true) if dev?(tag.globals.page.request)
     options
   end
 end
